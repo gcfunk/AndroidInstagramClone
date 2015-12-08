@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
           }
       });*/
 
-      ParseUser.logInInBackground("greg", "password", new LogInCallback() {
+      /*ParseUser.logInInBackground("greg", "password", new LogInCallback() {
           @Override
           public void done(ParseUser user, ParseException e) {
               if (user != null) {
@@ -109,7 +109,14 @@ public class MainActivity extends AppCompatActivity {
                   e.printStackTrace();
               }
           }
-      });
+      });*/
+
+      if (ParseUser.getCurrentUser() != null) {
+          Log.i("current user", "logged in");
+          ParseUser.logOut();
+      } else {
+          Log.i("current user", "NOT logged in");
+      }
   }
 
   @Override
