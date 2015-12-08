@@ -20,7 +20,9 @@ import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.parse.SignUpCallback;
 
 import java.util.List;
 
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
       });*/
 
 
-      ParseQuery<ParseObject> query = ParseQuery.getQuery("Score");
+      /*ParseQuery<ParseObject> query = ParseQuery.getQuery("Score");
       query.whereEqualTo("username", "greg");
       query.setLimit(1);
       query.findInBackground(new FindCallback<ParseObject>() {
@@ -76,6 +78,22 @@ public class MainActivity extends AppCompatActivity {
                   for (ParseObject object : objects) {
                       Log.i("score", String.valueOf(object.get("score")));
                   }
+              }
+          }
+      });*/
+
+      ParseUser user = new ParseUser();
+      user.setUsername("greg");
+      user.setPassword("password");
+
+      user.signUpInBackground(new SignUpCallback() {
+          @Override
+          public void done(ParseException e) {
+              if (e == null) {
+                  Log.i("sign up", "Success");
+              } else {
+                  Log.i("sign up", "failed");
+                  e.printStackTrace();
               }
           }
       });
