@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.parse.ParseAnalytics;
+import com.parse.ParseObject;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -24,6 +25,12 @@ public class MainActivity extends ActionBarActivity {
     setContentView(R.layout.activity_main);
 
     ParseAnalytics.trackAppOpenedInBackground(getIntent());
+
+      ParseObject score = new ParseObject("Score");
+      score.put("username", "greg");
+      score.put("score", 96);
+      score.saveInBackground();
+
   }
 
   @Override
