@@ -13,6 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -30,6 +34,26 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    EditText username;
+    EditText password;
+
+    public void signUpOrLogIn(View view) {
+        ParseUser user = new ParseUser();
+        user.setUsername(String.valueOf(username.getText()));
+        user.setPassword(String.valueOf(password.getText()));
+
+        user.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.i("sign up", "success");
+                } else {
+                    Toast.makeText(getApplicationContext(), e.getMessage().substring(e.getMessage().indexOf(" ")), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -37,86 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
     ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
-      /*ParseObject score = new ParseObject("Score");
-      score.put("username", "riley");
-      score.put("score", 150);
-      score.saveInBackground(new SaveCallback() {
-          @Override
-          public void done(ParseException e) {
-              if (e == null) {
-                  Log.i("SaveInBackground", "Success");
-              } else {
-                  Log.i("SaveInBackground", "Failed");
-                  e.printStackTrace();
-              }
-          }
-      });
+      username = (EditText) findViewById(R.id.username);
+      password = (EditText) findViewById(R.id.password);
 
-      ParseQuery<ParseObject> query = ParseQuery.getQuery("Score");
-      query.getInBackground("V2KPRQYd8c", new GetCallback<ParseObject>() {
-          @Override
-          public void done(ParseObject object, ParseException e) {
-              if (e == null) {
-                  object.put("score", 500);
-                  object.saveInBackground();
-              } else {
-                  Log.i("getInBackground", "Failed");
-                  e.printStackTrace();
-              }
-          }
-      });*/
-
-
-      /*ParseQuery<ParseObject> query = ParseQuery.getQuery("Score");
-      query.whereEqualTo("username", "greg");
-      query.setLimit(1);
-      query.findInBackground(new FindCallback<ParseObject>() {
-          @Override
-          public void done(List<ParseObject> objects, ParseException e) {
-              if (e == null) {
-                  Log.i("findInBackground", "Retrieved " + objects.size() + " objects");
-
-                  for (ParseObject object : objects) {
-                      Log.i("score", String.valueOf(object.get("score")));
-                  }
-              }
-          }
-      });*/
-
-      /*ParseUser user = new ParseUser();
-      user.setUsername("greg");
-      user.setPassword("password");
-
-      user.signUpInBackground(new SignUpCallback() {
-          @Override
-          public void done(ParseException e) {
-              if (e == null) {
-                  Log.i("sign up", "Success");
-              } else {
-                  Log.i("sign up", "failed");
-                  e.printStackTrace();
-              }
-          }
-      });*/
-
-      /*ParseUser.logInInBackground("greg", "password", new LogInCallback() {
-          @Override
-          public void done(ParseUser user, ParseException e) {
-              if (user != null) {
-                  Log.i("log in", "Success");
-              } else {
-                  Log.i("log in", "failed");
-                  e.printStackTrace();
-              }
-          }
-      });*/
-
-      if (ParseUser.getCurrentUser() != null) {
-          Log.i("current user", "logged in");
-          ParseUser.logOut();
-      } else {
-          Log.i("current user", "NOT logged in");
-      }
   }
 
   @Override

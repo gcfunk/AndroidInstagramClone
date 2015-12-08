@@ -51,7 +51,9 @@
         android:id="@+id/signUpButton"
         android:layout_marginTop="46dp"
         android:layout_below="@+id/password"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:nestedScrollingEnabled="false"
+        android:onClick="signUpOrLogIn" />
 
     <TextView
         android:layout_width="wrap_content"
