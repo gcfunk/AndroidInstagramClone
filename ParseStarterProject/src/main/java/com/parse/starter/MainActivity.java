@@ -14,12 +14,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
+
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -44,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                   e.printStackTrace();
               }
           }
-      });*/
+      });
 
       ParseQuery<ParseObject> query = ParseQuery.getQuery("Score");
       query.getInBackground("V2KPRQYd8c", new GetCallback<ParseObject>() {
@@ -58,8 +61,24 @@ public class MainActivity extends AppCompatActivity {
                   e.printStackTrace();
               }
           }
-      });
+      });*/
 
+
+      ParseQuery<ParseObject> query = ParseQuery.getQuery("Score");
+      query.whereEqualTo("username", "greg");
+      query.setLimit(1);
+      query.findInBackground(new FindCallback<ParseObject>() {
+          @Override
+          public void done(List<ParseObject> objects, ParseException e) {
+              if (e == null) {
+                  Log.i("findInBackground", "Retrieved " + objects.size() + " objects");
+
+                  for (ParseObject object : objects) {
+                      Log.i("score", String.valueOf(object.get("score")));
+                  }
+              }
+          }
+      });
   }
 
   @Override
