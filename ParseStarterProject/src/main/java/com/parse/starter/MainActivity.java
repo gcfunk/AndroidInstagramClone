@@ -16,6 +16,7 @@ import android.view.MenuItem;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
+import com.parse.LogInCallback;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
           }
       });*/
 
-      ParseUser user = new ParseUser();
+      /*ParseUser user = new ParseUser();
       user.setUsername("greg");
       user.setPassword("password");
 
@@ -93,6 +94,18 @@ public class MainActivity extends AppCompatActivity {
                   Log.i("sign up", "Success");
               } else {
                   Log.i("sign up", "failed");
+                  e.printStackTrace();
+              }
+          }
+      });*/
+
+      ParseUser.logInInBackground("greg", "password", new LogInCallback() {
+          @Override
+          public void done(ParseUser user, ParseException e) {
+              if (user != null) {
+                  Log.i("log in", "Success");
+              } else {
+                  Log.i("log in", "failed");
                   e.printStackTrace();
               }
           }
