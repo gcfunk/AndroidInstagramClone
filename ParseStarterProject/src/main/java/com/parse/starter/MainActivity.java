@@ -9,15 +9,18 @@
 package com.parse.starter;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.parse.ParseAnalytics;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +30,19 @@ public class MainActivity extends ActionBarActivity {
     ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
       ParseObject score = new ParseObject("Score");
-      score.put("username", "greg");
-      score.put("score", 96);
-      score.saveInBackground();
+      score.put("username", "riley");
+      score.put("score", 150);
+      score.saveInBackground(new SaveCallback() {
+          @Override
+          public void done(ParseException e) {
+              if (e == null) {
+                  Log.i("SaveInBackground", "Success");
+              } else {
+                  Log.i("SaveInBackground", "Failed");
+                  e.printStackTrace();
+              }
+          }
+      });
 
   }
 
