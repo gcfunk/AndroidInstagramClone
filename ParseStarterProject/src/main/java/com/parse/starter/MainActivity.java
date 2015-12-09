@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -32,37 +33,74 @@ import com.parse.SignUpCallback;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText username;
     EditText password;
+    TextView changeSignUpMode;
+    Button signUpButton;
+    boolean signUpMode;
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.changeSignUpMode) {
+            if (signUpMode) {
+                signUpMode = false;
+                signUpButton.setText("Log In");
+                changeSignUpMode.setText("Sign Up");
+            } else {
+                signUpMode = true;
+                signUpButton.setText("Sign Up");
+                changeSignUpMode.setText("Log In");
+            }
+
+        }
+    }
 
     public void signUpOrLogIn(View view) {
-        ParseUser user = new ParseUser();
-        user.setUsername(String.valueOf(username.getText()));
-        user.setPassword(String.valueOf(password.getText()));
+        if (signUpMode) {
+            ParseUser user = new ParseUser();
+            user.setUsername(String.valueOf(username.getText()));
+            user.setPassword(String.valueOf(password.getText()));
 
-        user.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Log.i("sign up", "success");
-                } else {
-                    Toast.makeText(getApplicationContext(), e.getMessage().substring(e.getMessage().indexOf(" ")), Toast.LENGTH_LONG).show();
+            user.signUpInBackground(new SignUpCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Log.i("AppInfo", "sign up success");
+                    } else {
+                        Toast.makeText(getApplicationContext(), e.getMessage().substring(e.getMessage().indexOf(" ")), Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            ParseUser.logInInBackground(String.valueOf(username.getText()), String.valueOf(password.getText()), new LogInCallback() {
+                @Override
+                public void done(ParseUser user, ParseException e) {
+                    if (user != null) {
+                        Log.i("AppInfo", "sign up success");
+                    } else {
+                        Toast.makeText(getApplicationContext(), e.getMessage().substring(e.getMessage().indexOf(" ")), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
     }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+      setContentView(R.layout.activity_main);
 
     ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
       username = (EditText) findViewById(R.id.username);
       password = (EditText) findViewById(R.id.password);
+      changeSignUpMode = (TextView) findViewById(R.id.changeSignUpMode);
+      signUpButton = (Button) findViewById(R.id.signUpButton);
+      signUpMode = true;
+
+      changeSignUpMode.setOnClickListener(this);
 
   }
 
