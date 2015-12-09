@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -55,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 changeSignUpMode.setText("Log In");
             }
 
+        } else if (v.getId() == R.id.imageView || v.getId() == R.id.mylayout) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
 
@@ -110,6 +114,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
       signUpMode = true;
 
       changeSignUpMode.setOnClickListener(this);
+      findViewById(R.id.imageView).setOnClickListener(this);
+      findViewById(R.id.mylayout).setOnClickListener(this);
 
       password.setOnKeyListener(this);
   }
