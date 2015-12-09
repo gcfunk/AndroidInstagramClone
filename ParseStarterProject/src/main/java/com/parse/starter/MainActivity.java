@@ -11,6 +11,7 @@ package com.parse.starter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +34,7 @@ import com.parse.SignUpCallback;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener {
 
     EditText username;
     EditText password;
@@ -55,6 +56,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         }
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+            signUpOrLogIn(v);
+        }
+        return false;
     }
 
     public void signUpOrLogIn(View view) {
@@ -102,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
       changeSignUpMode.setOnClickListener(this);
 
+      password.setOnKeyListener(this);
   }
 
   @Override
