@@ -11,5 +11,11 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.parse.starter.UserList">
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
 <!-- From: file:/Users/gregfunk/AndroidStudioProjects/AndroidInstagramClone/ParseStarterProject/src/main/res/layout/content_user_list.xml -->

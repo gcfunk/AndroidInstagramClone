@@ -294,6 +294,7 @@
     <string name="status_bar_notification_info_overflow">999+</string>
     <!-- From: file:/Users/gregfunk/AndroidStudioProjects/AndroidInstagramClone/ParseStarterProject/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="title_activity_photo">Photo</string>
     <string name="title_activity_user_list">User List</string>
     <!-- From: file:/Users/gregfunk/AndroidStudioProjects/AndroidInstagramClone/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/res/values/values.xml -->
     <eat-comment/>

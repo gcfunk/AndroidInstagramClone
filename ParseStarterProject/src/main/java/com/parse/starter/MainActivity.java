@@ -8,6 +8,7 @@
  */
 package com.parse.starter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void done(ParseException e) {
                     if (e == null) {
                         Log.i("AppInfo", "sign up success");
+                        showUserList();
                     } else {
                         Toast.makeText(getApplicationContext(), e.getMessage().substring(e.getMessage().indexOf(" ")), Toast.LENGTH_LONG).show();
                     }
@@ -91,7 +93,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void done(ParseUser user, ParseException e) {
                     if (user != null) {
-                        Log.i("AppInfo", "sign up success");
+                        Log.i("AppInfo", "log in success");
+                        showUserList();
                     } else {
                         Toast.makeText(getApplicationContext(), e.getMessage().substring(e.getMessage().indexOf(" ")), Toast.LENGTH_LONG).show();
                     }
@@ -100,12 +103,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void showUserList() {
+        Intent i = new Intent(getApplicationContext(), PhotoActivity.class);
+        startActivity(i);
+    }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_main);
 
     ParseAnalytics.trackAppOpenedInBackground(getIntent());
+
+      if (ParseUser.getCurrentUser() != null) {
+          showUserList();
+      }
 
       username = (EditText) findViewById(R.id.username);
       password = (EditText) findViewById(R.id.password);
